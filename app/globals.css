@@ -39,6 +39,9 @@
   .fade-in {
     animation: fadeIn 0.35s ease forwards;
   }
+  .animate-slide-in {
+    animation: slideIn 0.25s ease forwards;
+  }
   .hover-card:hover {
     border-color: rgba(0, 200, 240, 0.25);
     background-color: #131828;
@@ -51,4 +54,9 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
 }
