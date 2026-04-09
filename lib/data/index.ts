@@ -134,3 +134,7 @@ export function getMeetingProject(meetingId: string) {
   if (!meeting) return null
   return getProject(meeting.projectId)
 }
+
+export function getProjectMeetings(projectId: string) {
+  return MEETINGS.filter(m => m.projectId === projectId)
+}
