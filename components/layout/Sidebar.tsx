@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { X, LayoutDashboard, Briefcase, Users, FileText, Calendar, Lightbulb, HardDrive } from 'lucide-react'
+import { X, LayoutDashboard, Briefcase, Users, FileText, Calendar, Lightbulb, HardDrive, Smartphone } from 'lucide-react'
 import { NavItem } from './NavItem'
 import { canAccess, getRoleColor } from '@/lib/auth'
 import { TEAM } from '@/lib/data'
@@ -94,6 +94,20 @@ export function Sidebar({ role, isOpen = false, onClose }: SidebarProps) {
               />
             </div>
           ))}
+
+          {/* Divider */}
+          <div className="my-3 border-t border-app-border" />
+
+          {/* PWA Showcase */}
+          <div onClick={handleNavClick}>
+            <NavItem
+              href="/pwa-showcase"
+              icon={<Smartphone size={18} />}
+              label="VecterAI PWA"
+              isActive={pathname === '/pwa-showcase'}
+              badge="NEW"
+            />
+          </div>
         </nav>
 
         {/* OneDrive Status */}

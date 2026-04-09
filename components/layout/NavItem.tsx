@@ -8,9 +8,10 @@ interface NavItemProps {
   icon: ReactNode
   label: string
   isActive?: boolean
+  badge?: string
 }
 
-export function NavItem({ href, icon, label, isActive = false }: NavItemProps) {
+export function NavItem({ href, icon, label, isActive = false, badge }: NavItemProps) {
   return (
     <Link
       href={href}
@@ -24,7 +25,12 @@ export function NavItem({ href, icon, label, isActive = false }: NavItemProps) {
       `}
     >
       <span className={isActive ? 'text-accent' : 'text-text-dim'}>{icon}</span>
-      <span>{label}</span>
+      <span className="flex-1">{label}</span>
+      {badge && (
+        <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-gold/20 text-gold rounded">
+          {badge}
+        </span>
+      )}
     </Link>
   )
 }
