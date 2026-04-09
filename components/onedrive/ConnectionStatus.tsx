@@ -16,7 +16,7 @@ const PERMISSION_SCOPES = [
 ]
 
 const ACCOUNT_DETAILS = [
-  { label: 'Account', value: 'knowledge-os@vecterai.com' },
+  { label: 'Account', value: 'knowledge-os@vecterai.io' },
   { label: 'Tenant', value: 'vecterai.onmicrosoft.com' },
   { label: 'App Registration', value: 'VecterAI Knowledge OS' },
   { label: 'Auth Method', value: 'Client Credentials (OAuth 2.0)' },

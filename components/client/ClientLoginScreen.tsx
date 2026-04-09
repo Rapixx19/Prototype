@@ -14,6 +14,7 @@ export function ClientLoginScreen() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -77,7 +78,7 @@ export function ClientLoginScreen() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="your@vecterai.com"
+              placeholder="your@vecterai.io"
               className="w-full bg-app-surface border border-app-border rounded-xl px-4 py-3 font-dm text-text-primary text-sm focus:border-accent-border focus:outline-none transition-colors"
               required
             />
@@ -106,6 +107,17 @@ export function ClientLoginScreen() {
               </button>
             </div>
           </div>
+
+          {/* Remember me */}
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={e => setRememberMe(e.target.checked)}
+              className="w-4 h-4 rounded border-app-border bg-app-surface text-accent focus:ring-accent focus:ring-offset-0 cursor-pointer"
+            />
+            <span className="font-dm text-text-mid text-sm">Remember me</span>
+          </label>
 
           {/* Error message */}
           {error && (
@@ -154,7 +166,7 @@ export function ClientLoginScreen() {
           <div className="font-dm text-text-dim text-xs">
             Access provided by VecterAI Consulting
           </div>
-          <div className="font-dm text-text-dim text-xs mt-0.5">vecterai.com</div>
+          <div className="font-dm text-text-dim text-xs mt-0.5">vecterai.io</div>
         </div>
       </div>
     </div>

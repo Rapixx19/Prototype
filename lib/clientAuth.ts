@@ -13,7 +13,7 @@ export const CLIENT_ACCOUNTS: ClientAccount[] = [
   {
     id: 'client-01',
     name: 'Jaime Serrano',
-    email: 'jaime.serrano@vecterai.com',
+    email: 'jaime.serrano@vecterai.io',
     password: 'vecterai2025',
     company: 'VecterAI Consulting',
     avatar: 'JS',
@@ -23,7 +23,7 @@ export const CLIENT_ACCOUNTS: ClientAccount[] = [
   {
     id: 'client-02',
     name: 'Rafael Serrano',
-    email: 'rafael.serrano@vecterai.com',
+    email: 'rafael.serrano@vecterai.io',
     password: 'vecterai2025',
     company: 'VecterAI Consulting',
     avatar: 'RS',
@@ -33,7 +33,7 @@ export const CLIENT_ACCOUNTS: ClientAccount[] = [
   {
     id: 'client-03',
     name: 'Ferdinand Straehuber',
-    email: 'ferdinand.straehuber@vecterai.com',
+    email: 'ferdinand.straehuber@vecterai.io',
     password: 'vecterai2025',
     company: 'VecterAI Consulting',
     avatar: 'FS',

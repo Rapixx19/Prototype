@@ -117,7 +117,7 @@ export function LoginScreen() {
 
         <div className="text-center mt-8">
           <span className="text-text-dim text-xs font-dm">
-            This is a prototype demo. All data is synthetic. Powered by VecterAI Consulting &middot; vecterai.com
+            This is a prototype demo. All data is synthetic. Powered by VecterAI Consulting &middot; vecterai.io
           </span>
         </div>
       </div>
