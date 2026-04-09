@@ -1,4 +1,4 @@
-import { Syne, DM_Sans } from 'next/font/google'
+import { Syne, DM_Sans, Caveat } from 'next/font/google'
 import './globals.css'
 
 const syne = Syne({
@@ -13,6 +13,12 @@ const dmSans = DM_Sans({
   weight: ['300', '400', '500', '600'],
 })
 
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
+  weight: ['400', '600'],
+})
+
 export const metadata = {
   title: 'VecterAI Knowledge OS',
   description: 'AI Knowledge Management System',
@@ -21,7 +27,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${dmSans.variable} bg-app-bg text-text-primary antialiased`}>
+      <body className={`${syne.variable} ${dmSans.variable} ${caveat.variable} bg-app-bg text-text-primary antialiased`}>
         {children}
       </body>
     </html>

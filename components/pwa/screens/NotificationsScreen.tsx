@@ -4,7 +4,11 @@ import { Calendar, AlertTriangle, FileText, MessageCircle, CheckSquare, Bell } f
 import { PWA_NOTIFICATIONS } from '@/lib/pwa/pwaData'
 import type { PWANotification } from '@/lib/pwa/pwaTypes'
 
-export function NotificationsScreen() {
+export interface NotificationsScreenProps {
+  onNotificationTap?: (notification: PWANotification) => void
+}
+
+export function NotificationsScreen({ onNotificationTap }: NotificationsScreenProps = {}) {
   const unreadNotifications = PWA_NOTIFICATIONS.filter(n => !n.read)
   const readNotifications = PWA_NOTIFICATIONS.filter(n => n.read)
 
@@ -49,6 +53,7 @@ export function NotificationsScreen() {
     return (
       <button
         key={notification.id}
+        onClick={() => onNotificationTap?.(notification)}
         className={`w-full flex items-start gap-3 p-3 rounded-xl border transition-colors text-left ${
           isUnread
             ? 'bg-app-card border-app-border hover:border-accent/30'

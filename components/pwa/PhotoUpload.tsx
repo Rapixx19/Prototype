@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { ArrowLeft, Camera, Scan, Check, FileText, Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowLeft, Camera, Scan, Check, Loader2, PenLine } from 'lucide-react'
 
 export interface PhotoUploadProps {
   onBack: () => void
@@ -69,9 +69,50 @@ export function PhotoUpload({ onBack }: PhotoUploadProps) {
             {/* Simulated camera view */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-[85%] aspect-[4/3] bg-app-card2 rounded-lg overflow-hidden">
-                {/* Document placeholder */}
-                <div className="absolute inset-4 border-2 border-dashed border-text-dim/30 rounded flex items-center justify-center">
-                  <FileText className="w-12 h-12 text-text-dim/30" />
+                {/* Handwritten notes document */}
+                <div className="absolute inset-3 bg-[#FFFDE7] rounded shadow-lg overflow-hidden">
+                  {/* Red margin line */}
+                  <div className="absolute left-6 top-0 bottom-0 w-[1px] bg-rose-300/60" />
+
+                  {/* Blue ruled lines */}
+                  <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                    {[...Array(8)].map((_, i) => (
+                      <line
+                        key={i}
+                        x1="0"
+                        y1={`${15 + i * 12}%`}
+                        x2="100%"
+                        y2={`${15 + i * 12}%`}
+                        stroke="#B8D4E8"
+                        strokeWidth="0.5"
+                        opacity="0.6"
+                      />
+                    ))}
+                  </svg>
+
+                  {/* Handwritten content */}
+                  <div className="relative p-2 pl-8 pt-3 space-y-1">
+                    <p className="font-[var(--font-caveat)] text-gray-800 text-[11px] leading-tight rotate-[-0.5deg]">
+                      Q2 Portfolio Review Notes
+                    </p>
+                    <p className="font-[var(--font-caveat)] text-gray-700 text-[9px] leading-tight rotate-[0.3deg] pl-1">
+                      - Harbour Gate IRR: 18%
+                    </p>
+                    <p className="font-[var(--font-caveat)] text-gray-700 text-[9px] leading-tight rotate-[-0.2deg]">
+                      - Planning consent: 8 wks
+                    </p>
+                    <p className="font-[var(--font-caveat)] text-gray-700 text-[9px] leading-tight rotate-[0.5deg] pl-0.5">
+                      - Equity structure pending
+                    </p>
+                    <p className="font-[var(--font-caveat)] text-gray-600 text-[8px] leading-tight rotate-[-0.3deg] pt-1">
+                      Follow up w/ James re: docs
+                    </p>
+                  </div>
+
+                  {/* Pen icon */}
+                  <div className="absolute bottom-1.5 right-1.5">
+                    <PenLine className="w-3 h-3 text-gray-400/60" />
+                  </div>
                 </div>
 
                 {/* Corner guides */}

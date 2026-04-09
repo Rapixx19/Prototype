@@ -18,7 +18,8 @@ import { CalendarScreen } from '@/components/pwa/screens/CalendarScreen'
 import { DocumentsScreen } from '@/components/pwa/screens/DocumentsScreen'
 import { NotificationsScreen } from '@/components/pwa/screens/NotificationsScreen'
 import { PhotoUpload } from '@/components/pwa/PhotoUpload'
-import type { PhoneScreen, PhoneState } from '@/lib/pwa/pwaTypes'
+import type { PhoneScreen, PhoneState, PWANotification } from '@/lib/pwa/pwaTypes'
+import { PWA_THREADS } from '@/lib/pwa/pwaData'
 import {
   MapPin,
   Brain,
@@ -168,7 +169,10 @@ export default function PWAShowcasePage() {
               // Future: navigate to task detail
             }}
             onNavigateToNotification={() => {
-              // Future: navigate to notification detail
+              navigate('notifications')
+            }}
+            onNavigateToPhotoUpload={() => {
+              navigate('photo-upload')
             }}
           />
         )
@@ -200,8 +204,13 @@ export default function PWAShowcasePage() {
         return (
           <ChatScreen
             onSelectThread={(threadId) => {
-              setPhoneState(prev => ({ ...prev, selectedThreadId: threadId }))
-              navigate('chat-conversation')
+              // VecterAI Assistant thread opens the AI chatbot
+              if (threadId === 'thread-04') {
+                navigate('meeting-chatbot')
+              } else {
+                setPhoneState(prev => ({ ...prev, selectedThreadId: threadId }))
+                navigate('chat-conversation')
+              }
             }}
           />
         )
@@ -228,7 +237,29 @@ export default function PWAShowcasePage() {
         return <DocumentsScreen />
 
       case 'notifications':
-        return <NotificationsScreen />
+        return (
+          <NotificationsScreen
+            onNotificationTap={(notification: PWANotification) => {
+              if (notification.type === 'meeting' && notification.meetingId) {
+                setPhoneState(prev => ({ ...prev, selectedMeetingId: notification.meetingId! }))
+                navigate('pre-meeting-hub')
+              } else if (notification.type === 'message' && notification.contactId) {
+                // Find thread by contact ID
+                const thread = PWA_THREADS.find(t =>
+                  t.name.toLowerCase().includes(notification.title.toLowerCase().split(' ')[0])
+                )
+                if (thread) {
+                  setPhoneState(prev => ({ ...prev, selectedThreadId: thread.id }))
+                  navigate('chat-conversation')
+                }
+              } else if (notification.type === 'alert' || notification.type === 'task') {
+                // Stay on notifications but could navigate to project in future
+              } else if (notification.type === 'document') {
+                navigate('documents')
+              }
+            }}
+          />
+        )
 
       default:
         return (

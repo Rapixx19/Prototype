@@ -33,6 +33,7 @@
   /* Font families */
   --font-syne: var(--font-syne), sans-serif;
   --font-dm: var(--font-dm), sans-serif;
+  --font-caveat: var(--font-caveat), cursive;
 }
 
 @layer utilities {

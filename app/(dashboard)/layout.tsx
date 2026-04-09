@@ -2,9 +2,13 @@
 
 import { useState, useEffect, useSyncExternalStore, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { getRole, clearRole, getRoleLabel } from '@/lib/auth'
+import { getClientSession, logoutClient } from '@/lib/clientAuth'
+import { trackPage, endSession } from '@/lib/sessionTracker'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Topbar } from '@/components/layout/Topbar'
+import { AssistantWidget } from '@/components/AssistantWidget'
 import type { Role } from '@/lib/types'
 
 function useRole() {
@@ -26,9 +30,28 @@ function useMounted() {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const pathname = usePathname()
   const role = useRole()
   const mounted = useMounted()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  // Track page visits for client sessions
+  useEffect(() => {
+    const client = getClientSession()
+    if (client && pathname) {
+      trackPage(pathname)
+    }
+  }, [pathname])
+
+  // End session on tab/browser close
+  useEffect(() => {
+    const handleUnload = () => {
+      const client = getClientSession()
+      if (client) endSession()
+    }
+    window.addEventListener('beforeunload', handleUnload)
+    return () => window.removeEventListener('beforeunload', handleUnload)
+  }, [])
 
   useEffect(() => {
     if (mounted && typeof window !== 'undefined' && !localStorage.getItem('vecterai_role')) {
@@ -49,6 +72,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [])
 
   const handleLogout = () => {
+    endSession()
+    logoutClient()
     clearRole()
     router.push('/login')
   }
@@ -75,6 +100,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
+      <AssistantWidget />
     </div>
   )
 }

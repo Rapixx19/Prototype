@@ -123,22 +123,24 @@ Rules:
 }
 
 export async function generateContactBio(contact: Contact): Promise<string> {
-  const projects = contact.projectIds
+  const projects = (contact.projectIds ?? [])
     .map(id => getProject(id))
-    .filter(Boolean)
-    .map(p => `${p!.name} (${p!.status}, ${p!.value})`)
-    .join('; ')
+    .filter((p): p is Project => p !== undefined)
+    .map(p => `${p.name} (${p.status}, ${p.value})`)
+    .join('; ') || 'No projects on record'
+
+  const tags = (contact.tags ?? []).join(', ') || 'General'
 
   return callClaude(`Write a Contact Intelligence Brief for an investment firm's relationship management system.
 
-Contact: ${contact.name}
-Role: ${contact.role}
-Company: ${contact.company}
-Location: ${contact.location}
-Relationship Strength: ${contact.strength}
-Last Contact: ${contact.lastContact}
+Contact: ${contact.name ?? 'Unknown'}
+Role: ${contact.role ?? 'Unknown'}
+Company: ${contact.company ?? 'Unknown'}
+Location: ${contact.location ?? 'Unknown'}
+Relationship Strength: ${contact.strength ?? 'Unknown'}
+Last Contact: ${contact.lastContact ?? 'Unknown'}
 Deals Involved: ${projects}
-Areas of Expertise: ${contact.tags.join(', ')}
+Areas of Expertise: ${tags}
 ${contact.introducedBy ? `Introduced by: contact in network` : 'Relationship origin: direct'}
 
 Write 3 sentences as a senior relationship manager would describe this person to a colleague. Cover: (1) who they are professionally and their relevance to the firm, (2) their role in current or past deals, (3) relationship health and any follow-up context. No generic statements. Be specific about their value to the firm.`)
@@ -191,4 +193,38 @@ ${projectContext ? `Project: ${projectContext.name} (${projectContext.type}, ${p
 ${contactContext ? `Related Contact: ${contactContext.name} (${contactContext.role} at ${contactContext.company})` : ''}
 
 Write exactly 3 sentences as a senior investment analyst would brief a managing partner. First sentence: the root cause and why this matters to the firm. Second sentence: the potential impact if unaddressed. Third sentence: the recommended immediate action. Be specific and analytical — no generic advice.`)
+}
+
+export async function askAssistant(
+  message: string,
+  history: { role: 'user' | 'assistant'; content: string }[]
+): Promise<string> {
+  const messages = [
+    ...history.slice(-8).map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
+    { role: 'user' as const, content: message },
+  ]
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 300,
+    system: `You are the VecterAI Knowledge OS assistant. You are embedded in the platform and help users navigate and understand their system.
+
+You know the following about this platform:
+- 500 documents indexed across 10 projects
+- Active projects: Harbour Gate Portfolio £340M, Nordic Hospitality €210M, Alpine Heritage CHF 290M, Mediterranean Mixed-Use €155M, Urban Regeneration £175M
+- Pipeline: Central European Logistics €180M, Atlantic Residential €120M, Northern Energy £220M
+- Completed: Continental Office Fund €480M at 24.3% IRR
+- On Hold: Coastal Leisure Assets €95M pending regulatory review
+- 20 contacts across London, Madrid, Stockholm, Zurich, Prague, Lisbon, Rome
+- Key contacts: James Hartley (Hartley Capital, Strong), Sophie Renard (Renard Associates, Active), Astrid Lindqvist (Nordic Asset Management, Strong), Heinrich Braun (Alpine Investment Advisors, Strong)
+- 8 active insights — Alpine Heritage CHF 4.2M valuation discrepancy (High), Harbour Gate planning consent 8 weeks (High), Nordic operator agreement unsigned 6 weeks (High)
+- Today's meetings: Q2 Portfolio Review 09:30, Planning Consent call 14:00, Nordic operator discussion 16:30 tentative
+- Team: Alexandra Chen (Owner), Marcus Webb (Secretary), Priya Sharma (Employee), Tom Barrett (Intern)
+- Microsoft OneDrive and Outlook connected via Graph API — last sync 07:14
+- Security: TLS 1.3 in transit, AES-256 at rest, OAuth 2.0, zero data retention on all AI requests
+
+Answer in 1-3 sentences maximum. Be specific — use real names and numbers. Friendly but professional. Never say you cannot help.`,
+    messages,
+  })
+  const block = response.content[0]
+  return block.type === 'text' ? block.text : 'Unable to respond.'
 }
