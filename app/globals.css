@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* App backgrounds */
+  --color-app-bg: #07090F;
+  --color-app-surface: #0B0E17;
+  --color-app-card: #0F1320;
+  --color-app-card2: #131828;
+  --color-app-border: #1A2035;
+
+  /* Accent - VecterAI cyan */
+  --color-accent: #00C8F0;
+  --color-accent-dim: rgba(0, 200, 240, 0.12);
+  --color-accent-glow: rgba(0, 200, 240, 0.06);
+  --color-accent-border: rgba(0, 200, 240, 0.25);
+
+  /* Gold - secondary accent */
+  --color-gold: #C4A35A;
+  --color-gold-dim: rgba(196, 163, 90, 0.12);
+
+  /* Text hierarchy */
+  --color-text-primary: #EDF0F7;
+  --color-text-mid: #8892A4;
+  --color-text-dim: #4A5568;
+
+  /* Status colors */
+  --color-status-green: #00D68F;
+  --color-status-red: #FF4D6A;
+  --color-status-amber: #F5A623;
+  --color-status-blue: #4A9EFF;
+  --color-status-purple: #9B59FF;
+
+  /* Font families */
+  --font-syne: var(--font-syne), sans-serif;
+  --font-dm: var(--font-dm), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .fade-in {
+    animation: fadeIn 0.35s ease forwards;
+  }
+  .hover-card:hover {
+    border-color: rgba(0, 200, 240, 0.25);
+    background-color: #131828;
+  }
+  .hover-row:hover {
+    background-color: rgba(255, 255, 255, 0.03);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
