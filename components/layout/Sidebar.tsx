@@ -86,7 +86,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
 
           <div className="my-3 border-t border-app-border" />
 
-          <div onClick={handleNavClick}>
+          <div onClick={handleNavClick} className="hidden lg:block">
             <NavItem
               href="/pwa-showcase"
               icon={<Smartphone size={18} />}

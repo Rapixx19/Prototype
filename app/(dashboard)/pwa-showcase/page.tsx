@@ -27,7 +27,8 @@ import {
   Calendar,
   MessageSquare,
   FileText,
-  Bell
+  Bell,
+  Monitor
 } from 'lucide-react'
 
 const features = [
@@ -90,6 +91,14 @@ const NAV_VISIBLE_SCREENS: PhoneScreen[] = [
 
 export default function PWAShowcasePage() {
   const [phoneState, setPhoneState] = useState<PhoneState>(initialPhoneState)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   // Navigation helper
   const navigate = (screen: PhoneScreen) => {
@@ -120,6 +129,24 @@ export default function PWAShowcasePage() {
 
   // Check if nav should be visible
   const showNav = NAV_VISIBLE_SCREENS.includes(phoneState.currentScreen)
+
+  if (isMobile) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center bg-app-bg">
+        <div className="w-14 h-14 rounded-2xl bg-app-card border border-app-border flex items-center justify-center mb-6">
+          <Monitor className="w-7 h-7 text-accent" />
+        </div>
+        <h1 className="font-syne font-bold text-text-primary text-xl mb-3">
+          Desktop Only
+        </h1>
+        <p className="font-dm text-text-dim text-sm leading-relaxed max-w-xs">
+          The VecterAI PWA showcase is designed for desktop viewing.
+          Please open this page on a laptop or desktop to explore the
+          mobile experience.
+        </p>
+      </div>
+    )
+  }
 
   // Render current screen content
   const renderScreen = () => {
