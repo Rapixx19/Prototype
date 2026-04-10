@@ -2,12 +2,9 @@
 
 import { usePathname } from 'next/navigation'
 import { Search, Menu } from 'lucide-react'
-import { Badge } from '@/components/ui/Badge'
-import type { Role } from '@/lib/types'
 
 interface TopbarProps {
-  role: Role
-  roleLabel: string
+  displayName: string
   onLogout: () => void
   onMenuClick?: () => void
 }
@@ -28,25 +25,13 @@ function getBreadcrumb(pathname: string): string {
   return PATH_LABELS[base] || 'Dashboard'
 }
 
-function getBadgeColor(role: Role): 'accent' | 'purple' | 'green' | 'amber' {
-  const colors: Record<Role, 'accent' | 'purple' | 'green' | 'amber'> = {
-    owner: 'accent',
-    secretary: 'purple',
-    employee: 'green',
-    intern: 'amber',
-  }
-  return colors[role]
-}
-
-export function Topbar({ role, roleLabel, onLogout, onMenuClick }: TopbarProps) {
+export function Topbar({ displayName, onLogout, onMenuClick }: TopbarProps) {
   const pathname = usePathname()
   const breadcrumb = getBreadcrumb(pathname)
 
   return (
     <header className="h-14 bg-app-surface border-b border-app-border flex items-center justify-between px-4 md:px-6">
-      {/* Left side - Hamburger + Breadcrumb */}
       <div className="flex items-center gap-3">
-        {/* Mobile hamburger */}
         <button
           onClick={onMenuClick}
           className="md:hidden p-1.5 text-text-mid hover:text-text-primary hover:bg-app-card rounded transition-colors"
@@ -55,7 +40,6 @@ export function Topbar({ role, roleLabel, onLogout, onMenuClick }: TopbarProps) 
           <Menu size={20} />
         </button>
 
-        {/* Breadcrumb */}
         <div className="flex items-center gap-2">
           <span className="font-dm text-text-dim text-sm hidden sm:inline">VecterAI</span>
           <span className="text-text-dim hidden sm:inline">/</span>
@@ -63,9 +47,7 @@ export function Topbar({ role, roleLabel, onLogout, onMenuClick }: TopbarProps) 
         </div>
       </div>
 
-      {/* Right side */}
       <div className="flex items-center gap-2 md:gap-4">
-        {/* Search - hidden on very small screens */}
         <div className="relative hidden sm:block">
           <Search
             size={16}
@@ -78,16 +60,15 @@ export function Topbar({ role, roleLabel, onLogout, onMenuClick }: TopbarProps) 
           />
         </div>
 
-        {/* Role Badge - abbreviated on small screens */}
-        <Badge label={roleLabel} color={getBadgeColor(role)} />
+        <span className="px-3 py-1 rounded-full text-xs font-dm bg-accent/10 text-accent border border-accent-border">
+          {displayName}
+        </span>
 
-        {/* Switch Role */}
         <button
           onClick={onLogout}
           className="text-xs font-dm text-text-dim hover:text-accent transition-colors px-2 md:px-3 py-1 border border-app-border rounded hover:border-accent-border whitespace-nowrap"
         >
-          <span className="hidden sm:inline">Switch Role</span>
-          <span className="sm:hidden">Switch</span>
+          Sign Out
         </button>
       </div>
     </header>

@@ -1,5 +1,6 @@
 import { Syne, DM_Sans, Caveat } from 'next/font/google'
 import './globals.css'
+import { Providers } from '@/components/Providers'
 
 const syne = Syne({
   subsets: ['latin'],
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${syne.variable} ${dmSans.variable} ${caveat.variable} bg-app-bg text-text-primary antialiased`}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

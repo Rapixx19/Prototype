@@ -1,66 +1,30 @@
 'use client'
 
-import { useState, useEffect, useSyncExternalStore, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { getRole, clearRole, getRoleLabel } from '@/lib/auth'
-import { getClientSession, logoutClient } from '@/lib/clientAuth'
-import { trackPage, endSession } from '@/lib/sessionTracker'
+import { getSession, logout, initStorage } from '@/lib/auth/storage'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Topbar } from '@/components/layout/Topbar'
 import { AssistantWidget } from '@/components/AssistantWidget'
-import type { Role } from '@/lib/types'
-
-function useRole() {
-  const subscribe = useCallback(() => () => {}, [])
-  const getSnapshot = useCallback(() => getRole(), [])
-  const getServerSnapshot = useCallback(() => 'owner' as Role, [])
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
-}
-
-function useMounted() {
-  const subscribe = useCallback((onStoreChange: () => void) => {
-    onStoreChange()
-    return () => {}
-  }, [])
-  const getSnapshot = useCallback(() => true, [])
-  const getServerSnapshot = useCallback(() => false, [])
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
-}
+import type { AuthSession } from '@/lib/auth/types'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const pathname = usePathname()
-  const role = useRole()
-  const mounted = useMounted()
+  const [mounted, setMounted] = useState(false)
+  const [session, setSession] = useState<AuthSession | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // Track page visits for client sessions
   useEffect(() => {
-    const client = getClientSession()
-    if (client && pathname) {
-      trackPage(pathname)
-    }
-  }, [pathname])
-
-  // End session on tab/browser close
-  useEffect(() => {
-    const handleUnload = () => {
-      const client = getClientSession()
-      if (client) endSession()
-    }
-    window.addEventListener('beforeunload', handleUnload)
-    return () => window.removeEventListener('beforeunload', handleUnload)
-  }, [])
-
-  useEffect(() => {
-    if (mounted && typeof window !== 'undefined' && !localStorage.getItem('vecterai_role')) {
+    setMounted(true)
+    initStorage()
+    const currentSession = getSession()
+    if (!currentSession?.account) {
       router.push('/login')
+      return
     }
-  }, [mounted, router])
+    setSession(currentSession)
+  }, [router])
 
-  // Close sidebar on route change (handled by Sidebar component)
-  // Close sidebar when screen becomes larger than md breakpoint
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -72,9 +36,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [])
 
   const handleLogout = () => {
-    endSession()
-    logoutClient()
-    clearRole()
+    logout()
     router.push('/login')
   }
 
@@ -86,15 +48,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setSidebarOpen(false)
   }
 
-  if (!mounted) return null
+  if (!mounted || !session) return null
 
   return (
     <div className="flex h-screen bg-app-bg overflow-hidden">
-      <Sidebar role={role} isOpen={sidebarOpen} onClose={handleSidebarClose} />
+      <Sidebar isOpen={sidebarOpen} onClose={handleSidebarClose} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Topbar
-          role={role}
-          roleLabel={getRoleLabel(role)}
+          displayName={session.account.displayName}
           onLogout={handleLogout}
           onMenuClick={handleMenuClick}
         />

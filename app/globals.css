@@ -1,36 +1,36 @@
 @import "tailwindcss";
 
+:root {
+  --color-accent: #00C8F0;
+  --color-accent-dim: rgba(0, 200, 240, 0.12);
+  --color-accent-border: rgba(0, 200, 240, 0.25);
+}
+
 @theme {
-  /* App backgrounds */
   --color-app-bg: #07090F;
   --color-app-surface: #0B0E17;
   --color-app-card: #0F1320;
   --color-app-card2: #131828;
   --color-app-border: #1A2035;
 
-  /* Accent - VecterAI cyan */
-  --color-accent: #00C8F0;
-  --color-accent-dim: rgba(0, 200, 240, 0.12);
+  --color-accent: var(--color-accent, #00C8F0);
+  --color-accent-dim: var(--color-accent-dim, rgba(0, 200, 240, 0.12));
   --color-accent-glow: rgba(0, 200, 240, 0.06);
-  --color-accent-border: rgba(0, 200, 240, 0.25);
+  --color-accent-border: var(--color-accent-border, rgba(0, 200, 240, 0.25));
 
-  /* Gold - secondary accent */
   --color-gold: #C4A35A;
   --color-gold-dim: rgba(196, 163, 90, 0.12);
 
-  /* Text hierarchy */
   --color-text-primary: #EDF0F7;
   --color-text-mid: #8892A4;
   --color-text-dim: #4A5568;
 
-  /* Status colors */
   --color-status-green: #00D68F;
   --color-status-red: #FF4D6A;
   --color-status-amber: #F5A623;
   --color-status-blue: #4A9EFF;
   --color-status-purple: #9B59FF;
 
-  /* Font families */
   --font-syne: var(--font-syne), sans-serif;
   --font-dm: var(--font-dm), sans-serif;
   --font-caveat: var(--font-caveat), cursive;
@@ -44,7 +44,7 @@
     animation: slideIn 0.25s ease forwards;
   }
   .hover-card:hover {
-    border-color: rgba(0, 200, 240, 0.25);
+    border-color: var(--color-accent-border);
     background-color: #131828;
   }
   .hover-row:hover {
