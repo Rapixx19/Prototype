@@ -40,7 +40,7 @@ export default function TeamPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Page Header */}
       <div className="mb-6">
         <SectionLabel>Team Management</SectionLabel>

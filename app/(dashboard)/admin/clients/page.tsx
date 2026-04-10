@@ -73,7 +73,7 @@ export default function ClientAnalyticsPage() {
       </p>
 
       {/* Summary bar */}
-      <div className="grid grid-cols-3 gap-4 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
         <div className="bg-app-card border border-app-border rounded-xl p-4">
           <div className="font-syne font-bold text-text-primary text-3xl">{stats.length}</div>
           <div className="font-dm text-text-dim text-sm">Total Clients</div>

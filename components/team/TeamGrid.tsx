@@ -93,7 +93,7 @@ export function TeamGrid({ role }: TeamGridProps) {
       <div className="mb-4">
         <SectionLabel>Team Members</SectionLabel>
       </div>
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {TEAM.map((member) => (
           <MemberCard key={member.id} member={member} showMetrics={showMetrics} />
         ))}

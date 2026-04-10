@@ -122,15 +122,15 @@ export default function ContactsPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="mb-6">
         <SectionLabel>Contact Intelligence</SectionLabel>
         <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">Relationship Directory</h1>
         <p className="font-dm text-text-dim text-sm mt-1">{CONTACTS.length} contacts across your portfolio</p>
       </div>
 
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex gap-1">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex gap-1 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
           {STRENGTH_TABS.map(tab => (
             <button
               key={tab}
@@ -162,7 +162,7 @@ export default function ContactsPage() {
       </div>
 
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filtered.map(contact => (
             <ContactCard key={contact.id} contact={contact} />
           ))}

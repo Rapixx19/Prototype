@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Search, Menu } from 'lucide-react'
+import { Search, Menu, LogOut } from 'lucide-react'
 
 interface TopbarProps {
   displayName: string
@@ -60,15 +60,16 @@ export function Topbar({ displayName, onLogout, onMenuClick }: TopbarProps) {
           />
         </div>
 
-        <span className="px-3 py-1 rounded-full text-xs font-dm bg-accent/10 text-accent border border-accent-border">
+        <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-dm bg-accent/10 text-accent border border-accent-border max-w-[100px] sm:max-w-none truncate">
           {displayName}
         </span>
 
         <button
           onClick={onLogout}
-          className="text-xs font-dm text-text-dim hover:text-accent transition-colors px-2 md:px-3 py-1 border border-app-border rounded hover:border-accent-border whitespace-nowrap"
+          className="text-xs font-dm text-text-dim hover:text-accent transition-colors px-2 md:px-3 py-1 border border-app-border rounded hover:border-accent-border whitespace-nowrap flex items-center gap-1"
         >
-          Sign Out
+          <LogOut size={14} className="sm:hidden" />
+          <span className="hidden sm:inline">Sign Out</span>
         </button>
       </div>
     </header>

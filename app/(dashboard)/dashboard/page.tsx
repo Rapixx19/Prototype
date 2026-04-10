@@ -42,7 +42,7 @@ export default function DashboardPage() {
   if (!mounted) return null
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Page Header */}
       <div className="flex items-start justify-between mb-8">
         <div>
@@ -64,20 +64,20 @@ export default function DashboardPage() {
       <MorningBriefing role={role} />
 
       {/* 3-column Grid */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Col 1 — Today's Meetings (40%) */}
-        <div className="col-span-5">
+        <div className="md:col-span-5">
           <MeetingStrip role={role} />
         </div>
 
         {/* Col 2 — Tasks + Document Alerts (35%) */}
-        <div className="col-span-4 space-y-6">
+        <div className="md:col-span-4 space-y-6">
           <TaskPanel role={role} />
           <DocumentAlerts />
         </div>
 
         {/* Col 3 — Active Insights (25%) */}
-        <div className="col-span-3">
+        <div className="md:col-span-3">
           <InsightsPanel role={role} />
         </div>
       </div>

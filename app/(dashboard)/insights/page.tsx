@@ -132,27 +132,27 @@ export default function InsightsPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="mb-6">
         <SectionLabel>Intelligence Engine</SectionLabel>
         <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">Portfolio Insights</h1>
         <p className="font-dm text-text-dim text-sm mt-1">AI-generated alerts requiring attention</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <Card className="p-4"><div className="flex items-center gap-3"><TrendingUp className="text-accent" size={20} /><div><div className="font-dm text-text-dim text-xs">Total Active</div><div className="font-syne font-bold text-text-primary text-2xl">{counts.total}</div></div></div></Card>
         <Card className="p-4"><div className="flex items-center gap-3"><AlertTriangle className="text-status-red" size={20} /><div><div className="font-dm text-text-dim text-xs">High Severity</div><div className="font-syne font-bold text-status-red text-2xl">{counts.high}</div></div></div></Card>
         <Card className="p-4"><div className="flex items-center gap-3"><Clock className="text-status-amber" size={20} /><div><div className="font-dm text-text-dim text-xs">Medium Severity</div><div className="font-syne font-bold text-status-amber text-2xl">{counts.medium}</div></div></div></Card>
         <Card className="p-4"><div className="flex items-center gap-3"><Check className="text-status-blue" size={20} /><div><div className="font-dm text-text-dim text-xs">Low Severity</div><div className="font-syne font-bold text-status-blue text-2xl">{counts.low}</div></div></div></Card>
       </div>
 
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex gap-1">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex gap-1 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
           {SEVERITY_TABS.map(tab => (
-            <button key={tab} onClick={() => setSeverityTab(tab)} className={`px-4 py-2 text-sm font-dm rounded-lg transition-colors capitalize ${severityTab === tab ? 'text-accent bg-accent-dim border border-accent-border' : 'text-text-dim hover:text-text-mid hover:bg-app-card'}`}>{tab === 'all' ? 'All' : tab}</button>
+            <button key={tab} onClick={() => setSeverityTab(tab)} className={`px-4 py-2 text-sm font-dm rounded-lg transition-colors capitalize whitespace-nowrap ${severityTab === tab ? 'text-accent bg-accent-dim border border-accent-border' : 'text-text-dim hover:text-text-mid hover:bg-app-card'}`}>{tab === 'all' ? 'All' : tab}</button>
           ))}
         </div>
-        <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="bg-app-card border border-app-border rounded-lg px-3 py-2 text-text-primary font-dm text-sm focus:border-accent-border focus:outline-none">
+        <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="bg-app-card border border-app-border rounded-lg px-3 py-2 text-text-primary font-dm text-sm focus:border-accent-border focus:outline-none w-full sm:w-auto">
           {INSIGHT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
       </div>

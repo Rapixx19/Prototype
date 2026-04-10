@@ -70,7 +70,7 @@ export default function DealsPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Page Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
@@ -85,9 +85,9 @@ export default function DealsPage() {
       </div>
 
       {/* Filter Bar */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         {/* Status Tabs */}
-        <div className="flex gap-1">
+        <div className="flex gap-1 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
           {STATUS_TABS.map(tab => (
             <button
               key={tab}
@@ -125,7 +125,7 @@ export default function DealsPage() {
 
       {/* Project Grid */}
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filtered.map(project => (
             <ProjectCard key={project.id} project={project} role={role} />
           ))}

@@ -47,7 +47,7 @@ export function FinancialSnapshot({ project }: FinancialSnapshotProps) {
       </div>
 
       {/* Value breakdown */}
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
         <div>
           <div className="font-dm text-xs text-text-dim mb-1">Total Value</div>
           <div className="font-syne font-bold text-text-primary text-xl">{project.value}</div>
@@ -82,7 +82,7 @@ export function FinancialSnapshot({ project }: FinancialSnapshotProps) {
       <div className="border-t border-app-border my-4" />
 
       {/* IRR and dates */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div>
           <div className="font-dm text-xs text-text-dim mb-1">Target IRR</div>
           <div className="font-syne font-bold text-text-primary text-xl">{project.irr}</div>

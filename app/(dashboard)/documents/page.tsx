@@ -103,7 +103,7 @@ export default function DocumentsPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Page Header */}
       <div className="flex items-start justify-between mb-6">
         <div>

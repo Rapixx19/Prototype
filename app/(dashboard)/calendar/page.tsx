@@ -98,14 +98,15 @@ export default function CalendarPage() {
   const relatedDocs = selectedProject ? getProjectDocs(selectedProject.id).slice(0, 5) : []
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="mb-6">
         <SectionLabel>Meeting Intelligence</SectionLabel>
         <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">Calendar</h1>
         <p className="font-dm text-text-dim text-sm mt-1">{MEETINGS.length} meetings scheduled</p>
       </div>
 
-      <div className="grid grid-cols-7 gap-3 mb-8">
+      <div className="overflow-x-auto pb-2 mb-8">
+      <div className="grid grid-cols-7 gap-3 min-w-[700px]">
         {weekDays.map(day => {
           const dayMeetings = getMeetingsForDay(day.date)
           return (
@@ -126,9 +127,10 @@ export default function CalendarPage() {
           )
         })}
       </div>
+      </div>
 
       <SectionLabel>Upcoming Meetings</SectionLabel>
-      <div className="mt-3 grid grid-cols-2 gap-4">
+      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
         {MEETINGS.map(meeting => {
           const proj = getProject(meeting.projectId)
           return (
@@ -159,7 +161,7 @@ export default function CalendarPage() {
       {selectedMeeting && (
         <>
           <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setSelectedMeeting(null)} />
-          <div className="fixed top-0 right-0 h-full w-[480px] bg-app-surface border-l border-app-border z-50 overflow-y-auto animate-slide-in">
+          <div className="fixed top-0 right-0 h-full w-full sm:w-[400px] md:w-[480px] bg-app-surface border-l border-app-border z-50 overflow-y-auto animate-slide-in">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <SectionLabel>Meeting Details</SectionLabel>
