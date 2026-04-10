@@ -5,6 +5,7 @@ export interface UserAccount {
   displayName: string
   createdAt: string
   active: boolean
+  createdBy?: string
 }
 
 export interface AuthSession {
@@ -21,40 +22,74 @@ const ADMIN_CREDENTIALS = {
   password: 'Lolotte2!',
 }
 
-const SEED_ACCOUNT: UserAccount = {
-  id: 'acc-demo-001',
-  username: 'demo',
-  password: 'demo2025',
-  displayName: 'Demo User',
-  createdAt: new Date().toISOString(),
-  active: true,
-}
+const HARDCODED_ACCOUNTS: UserAccount[] = [
+  {
+    id: 'acc-001',
+    username: 'jaime.serrano',
+    displayName: 'Jaime Serrano',
+    password: 'Test2026',
+    createdAt: '2025-01-01T00:00:00Z',
+    active: true,
+    createdBy: 'admin',
+  },
+  {
+    id: 'acc-002',
+    username: 'lucie.manning',
+    displayName: 'Lucie Manning',
+    password: 'Test2026',
+    createdAt: '2025-01-01T00:00:00Z',
+    active: true,
+    createdBy: 'admin',
+  },
+  {
+    id: 'acc-003',
+    username: 'ferdinand.straehuber',
+    displayName: 'Ferdinand Straehuber',
+    password: 'Test2026',
+    createdAt: '2025-01-01T00:00:00Z',
+    active: true,
+    createdBy: 'admin',
+  },
+  {
+    id: 'acc-004',
+    username: 'testuser178',
+    displayName: 'Testuser178',
+    password: 'Test2026',
+    createdAt: '2025-01-01T00:00:00Z',
+    active: true,
+    createdBy: 'admin',
+  },
+]
 
-export function initStorage(): void {
-  if (typeof window === 'undefined') return
-  const raw = localStorage.getItem(ACCOUNTS_KEY)
-  if (!raw) {
-    localStorage.setItem(ACCOUNTS_KEY, JSON.stringify([SEED_ACCOUNT]))
-  }
-}
-
-export function getAllAccounts(): UserAccount[] {
+function getLocalAccounts(): UserAccount[] {
   if (typeof window === 'undefined') return []
   try {
     const raw = localStorage.getItem(ACCOUNTS_KEY)
-    if (!raw) {
-      initStorage()
-      return [SEED_ACCOUNT]
-    }
+    if (!raw) return []
     return JSON.parse(raw)
   } catch {
     return []
   }
 }
 
+export function initStorage(): void {
+  // No-op: hardcoded accounts are always available
+}
+
+export function getAllAccounts(): UserAccount[] {
+  const localAccounts = getLocalAccounts()
+  // Filter out any local accounts that have the same id as hardcoded ones
+  const filteredLocal = localAccounts.filter(
+    local => !HARDCODED_ACCOUNTS.find(h => h.id === local.id)
+  )
+  return [...HARDCODED_ACCOUNTS, ...filteredLocal]
+}
+
 export function saveAllAccounts(accounts: UserAccount[]): void {
   if (typeof window === 'undefined') return
-  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts))
+  // Only save non-hardcoded accounts to localStorage
+  const localOnly = accounts.filter(a => !a.id.startsWith('acc-00'))
+  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(localOnly))
 }
 
 export function getAccountById(id: string): UserAccount | null {
@@ -62,20 +97,22 @@ export function getAccountById(id: string): UserAccount | null {
 }
 
 export function createAccount(account: Omit<UserAccount, 'id' | 'createdAt'>): UserAccount {
-  const accounts = getAllAccounts()
+  const localAccounts = getLocalAccounts()
   const newAccount: UserAccount = {
     ...account,
     id: `acc-${Date.now()}`,
     createdAt: new Date().toISOString(),
   }
-  accounts.push(newAccount)
-  saveAllAccounts(accounts)
+  localAccounts.push(newAccount)
+  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(localAccounts))
   return newAccount
 }
 
 export function deleteAccount(id: string): void {
-  const accounts = getAllAccounts().filter(a => a.id !== id)
-  saveAllAccounts(accounts)
+  // Prevent deletion of hardcoded accounts
+  if (id.startsWith('acc-00')) return
+  const localAccounts = getLocalAccounts().filter(a => a.id !== id)
+  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(localAccounts))
 }
 
 export function login(username: string, password: string): { success: boolean; isAdmin: boolean } {
@@ -89,7 +126,9 @@ export function login(username: string, password: string): { success: boolean; i
     return { success: true, isAdmin: true }
   }
 
-  const account = getAllAccounts().find(
+  // Check hardcoded accounts first, then local accounts
+  const allAccounts = [...HARDCODED_ACCOUNTS, ...getLocalAccounts()]
+  const account = allAccounts.find(
     a => a.username.toLowerCase() === username.toLowerCase() && a.password === password && a.active
   )
 
