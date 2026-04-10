@@ -1,5 +1,5 @@
-import { LoginScreen } from '@/components/auth/LoginScreen'
+import { ClientLoginScreen } from '@/components/client/ClientLoginScreen'
 
 export default function LoginPage() {
-  return <LoginScreen />
+  return <ClientLoginScreen />
 }
