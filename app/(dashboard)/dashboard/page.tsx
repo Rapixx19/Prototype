@@ -9,6 +9,7 @@ import { DocumentAlerts } from '@/components/dashboard/DocumentAlerts'
 import { InsightsPanel } from '@/components/dashboard/InsightsPanel'
 import { TeamStrip } from '@/components/dashboard/TeamStrip'
 import { getRole } from '@/lib/auth'
+import { getSession } from '@/lib/auth/storage'
 import type { Role } from '@/lib/types'
 
 function useRole() {
@@ -28,18 +29,24 @@ function useMounted() {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
-function getGreeting(role: Role): string {
-  if (role === 'owner') return 'Good morning, Alexandra.'
-  if (role === 'secretary') return 'Good morning, Marcus.'
-  if (role === 'employee') return 'Good morning, Priya.'
-  return 'Good morning.'
+function useDisplayName() {
+  const subscribe = useCallback(() => () => {}, [])
+  const getSnapshot = useCallback(() => {
+    const session = getSession()
+    return session?.account?.displayName ?? 'there'
+  }, [])
+  const getServerSnapshot = useCallback(() => 'there', [])
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
 export default function DashboardPage() {
   const role = useRole()
   const mounted = useMounted()
+  const displayName = useDisplayName()
 
   if (!mounted) return null
+
+  const firstName = displayName.split(' ')[0]
 
   return (
     <div className="p-4 md:p-8">
@@ -48,7 +55,7 @@ export default function DashboardPage() {
         <div>
           <SectionLabel>Morning Briefing</SectionLabel>
           <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">
-            {getGreeting(role)}
+            Good morning, {firstName}.
           </h1>
           <p className="font-dm text-text-dim text-sm mt-1">
             Thursday, 10 April 2025 &middot; London

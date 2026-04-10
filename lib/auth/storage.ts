@@ -115,35 +115,43 @@ export function deleteAccount(id: string): void {
   localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(localAccounts))
 }
 
-export function login(username: string, password: string): { success: boolean; isAdmin: boolean } {
-  if (
-    username.toLowerCase() === ADMIN_CREDENTIALS.username.toLowerCase() &&
-    password === ADMIN_CREDENTIALS.password
-  ) {
+export function login(username: string, password: string): { success: boolean; isAdmin: boolean; account?: UserAccount; error?: string } {
+  const u = username.trim().toLowerCase()
+  const p = password.trim()
+
+  console.log('LOGIN ATTEMPT:', u)
+
+  // Check admin
+  if (u === ADMIN_CREDENTIALS.username.toLowerCase() && p === ADMIN_CREDENTIALS.password) {
     if (typeof window !== 'undefined') {
-      localStorage.setItem(ADMIN_KEY, JSON.stringify({ loginTime: new Date().toISOString() }))
+      localStorage.setItem(ADMIN_KEY, JSON.stringify({ isAdmin: true, loginTime: new Date().toISOString() }))
     }
     return { success: true, isAdmin: true }
   }
 
-  // Check hardcoded accounts first, then local accounts
-  const allAccounts = [...HARDCODED_ACCOUNTS, ...getLocalAccounts()]
-  const account = allAccounts.find(
-    a => a.username.toLowerCase() === username.toLowerCase() && a.password === password && a.active
+  // Check hardcoded accounts first — works on any device, no localStorage needed
+  const hardcoded = HARDCODED_ACCOUNTS.find(
+    a => a.username.toLowerCase() === u && a.password === p && a.active
   )
-
-  if (account) {
-    const session: AuthSession = {
-      account,
-      loginTime: new Date().toISOString(),
-    }
+  if (hardcoded) {
     if (typeof window !== 'undefined') {
-      localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ account: hardcoded, loginTime: new Date().toISOString() }))
     }
-    return { success: true, isAdmin: false }
+    return { success: true, isAdmin: false, account: hardcoded }
   }
 
-  return { success: false, isAdmin: false }
+  // Then check localStorage accounts (admin-created ones)
+  const local = getLocalAccounts().find(
+    a => a.username.toLowerCase() === u && a.password === p && a.active
+  )
+  if (local) {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ account: local, loginTime: new Date().toISOString() }))
+    }
+    return { success: true, isAdmin: false, account: local }
+  }
+
+  return { success: false, isAdmin: false, error: 'Invalid username or password.' }
 }
 
 export function logout(): void {

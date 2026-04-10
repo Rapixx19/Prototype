@@ -94,6 +94,9 @@ export default function LoginPage() {
                   className="w-full bg-app-bg border border-app-border rounded-lg pl-11 pr-4 py-3 text-text-primary font-dm focus:outline-none focus:border-accent transition-colors"
                   placeholder="Enter username or email"
                   autoComplete="username"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                 />
               </div>
             </div>
@@ -110,6 +113,9 @@ export default function LoginPage() {
                   className="w-full bg-app-bg border border-app-border rounded-lg px-4 py-3 pr-11 text-text-primary font-dm focus:outline-none focus:border-accent transition-colors"
                   placeholder="Enter password"
                   autoComplete="current-password"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                 />
                 <button
                   type="button"
@@ -128,7 +134,8 @@ export default function LoginPage() {
             )}
 
             <button
-              type="submit"
+              type="button"
+              onClick={handleSubmit}
               disabled={isLoading}
               className="w-full bg-accent hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-dm font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
             >

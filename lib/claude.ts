@@ -1,11 +1,5 @@
-import Anthropic from '@anthropic-ai/sdk'
 import type { Project, Document, Contact, Meeting, Insight } from './types'
 import { getContact, getProject } from './data'
-
-const client = new Anthropic({
-  apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
-  dangerouslyAllowBrowser: true,
-})
 
 const SYSTEM_PROMPT = `You are the VecterAI Knowledge OS — an AI intelligence layer built for a private investment management firm. Your role is to synthesise information from documents, contacts, and project data to produce precise, institutional-grade intelligence for senior investment professionals.
 
@@ -19,14 +13,22 @@ Format rules:
 
 export async function callClaude(prompt: string, systemOverride?: string): Promise<string> {
   try {
-    const message = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      system: systemOverride ?? SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: prompt }],
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{ role: 'user', content: prompt }],
+        system: systemOverride ?? SYSTEM_PROMPT,
+      }),
     })
-    const block = message.content[0]
-    return block.type === 'text' ? block.text : ''
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`)
+    }
+
+    const data = await response.json()
+    const block = data.content?.[0]
+    return block?.type === 'text' ? block.text : ''
   } catch (error) {
     console.error('Claude API error:', error)
     return 'Intelligence unavailable — please try again.'
@@ -203,10 +205,8 @@ export async function askAssistant(
     ...history.slice(-8).map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
     { role: 'user' as const, content: message },
   ]
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 300,
-    system: `You are the VecterAI Knowledge OS assistant. You are embedded in the platform and help users navigate and understand their system.
+
+  const systemPrompt = `You are the VecterAI Knowledge OS assistant. You are embedded in the platform and help users navigate and understand their system.
 
 You know the following about this platform:
 - 500 documents indexed across 10 projects
@@ -222,9 +222,27 @@ You know the following about this platform:
 - Microsoft OneDrive and Outlook connected via Graph API — last sync 07:14
 - Security: TLS 1.3 in transit, AES-256 at rest, OAuth 2.0, zero data retention on all AI requests
 
-Answer in 1-3 sentences maximum. Be specific — use real names and numbers. Friendly but professional. Never say you cannot help.`,
-    messages,
-  })
-  const block = response.content[0]
-  return block.type === 'text' ? block.text : 'Unable to respond.'
+Answer in 1-3 sentences maximum. Be specific — use real names and numbers. Friendly but professional. Never say you cannot help.`
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages,
+        system: systemPrompt,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`)
+    }
+
+    const data = await response.json()
+    const block = data.content?.[0]
+    return block?.type === 'text' ? block.text : 'Unable to respond.'
+  } catch (error) {
+    console.error('Claude API error:', error)
+    return 'Unable to respond.'
+  }
 }
