@@ -21,6 +21,13 @@ Rules:
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json(
+        { error: 'ANTHROPIC_API_KEY environment variable is not set' },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
     const { contextPrompt, userMessage, conversationHistory } = body
 
@@ -48,8 +55,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ response: text })
   } catch (error) {
     console.error('PWA Chat API error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Failed to get response' },
+      { error: `Failed to get response: ${errorMessage}` },
       { status: 500 }
     )
   }
