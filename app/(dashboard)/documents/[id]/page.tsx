@@ -52,7 +52,7 @@ export default function DocumentDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       {/* Back button */}
       <button
         onClick={() => router.push('/documents')}
@@ -83,15 +83,15 @@ export default function DocumentDetailPage({ params }: PageProps) {
       </div>
 
       {/* 2-column grid */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: AI Summary + Content Placeholder (60%) */}
-        <div className="col-span-7">
+        <div className="lg:col-span-7">
           <AISummary doc={doc} />
           <ContentPlaceholder doc={doc} />
         </div>
 
         {/* Right: Cross-connections panel (40%) */}
-        <div className="col-span-5">
+        <div className="lg:col-span-5">
           {project && <LinkedProject project={project} />}
           <LinkedContacts doc={doc} />
         </div>

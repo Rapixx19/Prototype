@@ -75,7 +75,7 @@ export default function DealsPage() {
       <div className="flex items-start justify-between mb-6">
         <div>
           <SectionLabel>Deal Room</SectionLabel>
-          <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">
+          <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">
             Project Portfolio
           </h1>
           <p className="font-dm text-text-dim text-sm mt-1">
@@ -104,13 +104,13 @@ export default function DealsPage() {
         </div>
 
         {/* Search */}
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search projects..."
-            className="bg-app-card border border-app-border rounded-lg px-4 py-2 text-text-primary font-dm text-sm placeholder:text-text-dim focus:border-accent-border focus:outline-none transition-colors w-64"
+            className="bg-app-card border border-app-border rounded-lg px-4 py-2 text-text-primary font-dm text-sm placeholder:text-text-dim focus:border-accent-border focus:outline-none transition-colors w-full sm:w-64"
           />
           {search && (
             <button

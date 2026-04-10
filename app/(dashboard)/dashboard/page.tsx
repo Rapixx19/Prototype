@@ -51,10 +51,10 @@ export default function DashboardPage() {
   return (
     <div className="p-4 md:p-8">
       {/* Page Header */}
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
         <div>
           <SectionLabel>Morning Briefing</SectionLabel>
-          <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">
+          <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">
             Good morning, {firstName}.
           </h1>
           <p className="font-dm text-text-dim text-sm mt-1">
@@ -63,7 +63,7 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-center gap-2 text-xs font-dm text-status-green">
           <span className="w-2 h-2 rounded-full bg-status-green animate-pulse" />
-          500 documents indexed &middot; OneDrive synced 07:14
+          <span className="hidden sm:inline">500 documents indexed &middot;</span> OneDrive synced 07:14
         </div>
       </div>
 

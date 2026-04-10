@@ -63,9 +63,9 @@ export default function ClientAnalyticsPage() {
   const totalTime = stats.reduce((acc, s) => acc + s.totalTimeSeconds, 0)
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       <SectionLabel>Client Analytics</SectionLabel>
-      <h1 className="font-syne font-bold text-text-primary text-3xl mt-2">
+      <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-2">
         Client Visit Tracking
       </h1>
       <p className="font-dm text-text-mid text-sm mt-1">

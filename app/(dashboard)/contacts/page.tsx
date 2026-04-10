@@ -125,7 +125,7 @@ export default function ContactsPage() {
     <div className="p-4 md:p-8">
       <div className="mb-6">
         <SectionLabel>Contact Intelligence</SectionLabel>
-        <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">Relationship Directory</h1>
+        <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">Relationship Directory</h1>
         <p className="font-dm text-text-dim text-sm mt-1">{CONTACTS.length} contacts across your portfolio</p>
       </div>
 
@@ -146,14 +146,14 @@ export default function ContactsPage() {
           ))}
         </div>
 
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search contacts..."
-            className="bg-app-card border border-app-border rounded-lg pl-9 pr-4 py-2 text-text-primary font-dm text-sm placeholder:text-text-dim focus:border-accent-border focus:outline-none transition-colors w-64"
+            className="bg-app-card border border-app-border rounded-lg pl-9 pr-4 py-2 text-text-primary font-dm text-sm placeholder:text-text-dim focus:border-accent-border focus:outline-none transition-colors w-full sm:w-64"
           />
           {search && (
             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-dim hover:text-text-primary">×</button>

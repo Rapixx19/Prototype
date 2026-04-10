@@ -118,7 +118,7 @@ export default function DealDetailPage({ params }: PageProps) {
   const relatedDocs = selectedMeeting ? getProjectDocs(selectedMeeting.projectId).slice(0, 5) : []
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       {/* Back button */}
       <button
         onClick={() => router.push('/deals')}
@@ -153,14 +153,14 @@ export default function DealDetailPage({ params }: PageProps) {
       )}
 
       {/* 3-column grid */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Document Timeline (60%) */}
-        <div className="col-span-7">
+        <div className="lg:col-span-7">
           <DocumentTimeline project={project} />
         </div>
 
         {/* Right: People + Cross-connections + Insights (40%) */}
-        <div className="col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-4">
           <PeopleInvolved project={project} />
           <CrossConnections project={project} />
           <ProjectInsights project={project} role={role} />
@@ -171,8 +171,8 @@ export default function DealDetailPage({ params }: PageProps) {
       {selectedMeeting && (
         <>
           <div className="fixed inset-0 bg-black/50 z-40" onClick={closeMeetingPanel} />
-          <div className="fixed top-0 right-0 h-full w-[480px] bg-app-surface border-l border-app-border z-50 overflow-y-auto animate-slide-in">
-            <div className="p-6">
+          <div className="fixed top-0 right-0 h-full w-full sm:w-[400px] md:w-[480px] bg-app-surface border-l border-app-border z-50 overflow-y-auto animate-slide-in">
+            <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-6">
                 <SectionLabel>Meeting Brief</SectionLabel>
                 <button onClick={closeMeetingPanel} className="text-text-dim hover:text-text-primary transition-colors">

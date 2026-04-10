@@ -119,7 +119,7 @@ export function AssistantWidget() {
 
       {/* Chat Panel */}
       <div
-        className={`fixed bottom-24 right-6 z-50 w-[340px] h-[460px] bg-app-card border border-app-border rounded-2xl overflow-hidden border-t-2 border-t-accent flex flex-col transition-all duration-300 ease-out ${
+        className={`fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100%-2rem)] sm:w-[340px] h-[460px] max-h-[70vh] bg-app-card border border-app-border rounded-2xl overflow-hidden border-t-2 border-t-accent flex flex-col transition-all duration-300 ease-out ${
           open
             ? 'translate-y-0 opacity-100'
             : 'translate-y-4 opacity-0 pointer-events-none'

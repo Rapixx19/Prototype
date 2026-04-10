@@ -101,7 +101,7 @@ export default function CalendarPage() {
     <div className="p-4 md:p-8">
       <div className="mb-6">
         <SectionLabel>Meeting Intelligence</SectionLabel>
-        <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">Calendar</h1>
+        <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">Calendar</h1>
         <p className="font-dm text-text-dim text-sm mt-1">{MEETINGS.length} meetings scheduled</p>
       </div>
 
@@ -162,7 +162,7 @@ export default function CalendarPage() {
         <>
           <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setSelectedMeeting(null)} />
           <div className="fixed top-0 right-0 h-full w-full sm:w-[400px] md:w-[480px] bg-app-surface border-l border-app-border z-50 overflow-y-auto animate-slide-in">
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-6">
                 <SectionLabel>Meeting Details</SectionLabel>
                 <button onClick={() => setSelectedMeeting(null)} className="text-text-dim hover:text-text-primary transition-colors"><X size={20} /></button>

@@ -108,7 +108,7 @@ export default function DocumentsPage() {
       <div className="flex items-start justify-between mb-6">
         <div>
           <SectionLabel>Document Library</SectionLabel>
-          <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">
+          <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">
             Knowledge Base
           </h1>
           <p className="font-dm text-text-dim text-sm mt-1">
@@ -165,21 +165,21 @@ export default function DocumentsPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-4 mt-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-6">
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="px-4 py-2 text-sm font-dm text-text-mid border border-app-border rounded hover:bg-app-card disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full sm:w-auto px-4 py-2 text-sm font-dm text-text-mid border border-app-border rounded hover:bg-app-card disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Previous
           </button>
-          <span className="font-dm text-text-dim text-sm">
+          <span className="font-dm text-text-dim text-sm order-first sm:order-none">
             Page {page + 1} of {totalPages}
           </span>
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="px-4 py-2 text-sm font-dm text-text-mid border border-app-border rounded hover:bg-app-card disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full sm:w-auto px-4 py-2 text-sm font-dm text-text-mid border border-app-border rounded hover:bg-app-card disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Next
           </button>

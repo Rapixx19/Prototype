@@ -54,12 +54,12 @@ export default function AdminUsersPage() {
   const viewerCount = users.filter(u => u.role === 'viewer').length
 
   return (
-    <div className="p-8 fade-in">
+    <div className="p-4 sm:p-8 fade-in">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-6">
         <div>
           <SectionLabel>Admin Panel</SectionLabel>
-          <h1 className="font-syne font-bold text-text-primary text-3xl mt-2">
+          <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-2">
             Team Members
           </h1>
           <p className="font-dm text-text-mid text-sm mt-1">
@@ -73,7 +73,7 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-app-card border border-app-border rounded-xl p-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-accent/15 flex items-center justify-center">

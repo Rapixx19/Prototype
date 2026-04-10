@@ -82,13 +82,13 @@ export default function ContactDetailPage({ params }: PageProps) {
   const displayDocs = showAllDocs ? docs : docs.slice(0, 8)
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       <button onClick={() => router.push('/contacts')} className="text-accent text-sm font-dm mb-6 flex items-center gap-1 hover:opacity-80 transition-opacity">
         <ArrowLeft className="w-4 h-4" /> Back to Contacts
       </button>
 
-      <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-8 space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-8 space-y-4">
           <Card className="p-6">
             <div className="flex items-start gap-4">
               <div className="w-16 h-16 rounded-full bg-accent-dim border-2 border-accent-border flex items-center justify-center text-accent font-syne font-bold text-xl">
@@ -163,7 +163,7 @@ export default function ContactDetailPage({ params }: PageProps) {
           </Card>
         </div>
 
-        <div className="col-span-4 space-y-4">
+        <div className="lg:col-span-4 space-y-4">
           <Card className="p-5">
             <SectionLabel>Contact Details</SectionLabel>
             <div className="mt-3 space-y-3">

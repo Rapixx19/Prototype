@@ -33,7 +33,7 @@ export function FilterBar({
   return (
     <div className="mb-4 space-y-3">
       {/* Type tabs */}
-      <div className="flex gap-1 flex-wrap">
+      <div className="flex gap-1 flex-wrap overflow-x-auto pb-1">
         {DOC_TYPES.map(type => (
           <button
             key={type}
@@ -50,7 +50,7 @@ export function FilterBar({
       </div>
 
       {/* Second row: dropdowns + toggle */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
         {/* Project dropdown */}
         <select
           value={projectId}

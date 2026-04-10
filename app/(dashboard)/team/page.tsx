@@ -44,7 +44,7 @@ export default function TeamPage() {
       {/* Page Header */}
       <div className="mb-6">
         <SectionLabel>Team Management</SectionLabel>
-        <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">
+        <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">
           Team Overview
         </h1>
         <p className="font-dm text-text-dim text-sm mt-1">

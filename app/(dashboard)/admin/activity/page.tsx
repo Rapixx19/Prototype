@@ -43,11 +43,11 @@ export default function AdminActivityPage() {
   const totalLogins = loginHistory.length
 
   return (
-    <div className="p-8 fade-in">
+    <div className="p-4 sm:p-8 fade-in">
       {/* Header */}
       <div className="mb-6">
         <SectionLabel>Admin Panel</SectionLabel>
-        <h1 className="font-syne font-bold text-text-primary text-3xl mt-2">
+        <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-2">
           Activity & History
         </h1>
         <p className="font-dm text-text-mid text-sm mt-1">
@@ -56,7 +56,7 @@ export default function AdminActivityPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-app-card border border-app-border rounded-xl p-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-status-green/15 flex items-center justify-center">

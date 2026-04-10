@@ -28,7 +28,7 @@ export function MorningBriefing({ role }: MorningBriefingProps) {
   }, [role])
 
   return (
-    <div className="bg-app-card border border-app-border rounded-lg p-6 mb-6 border-t-2 border-t-accent">
+    <div className="bg-app-card border border-app-border rounded-lg p-4 sm:p-6 mb-6 border-t-2 border-t-accent">
       <SectionLabel>AI Intelligence &middot; Generated at 07:00</SectionLabel>
       <div className="mt-3 min-h-[60px]">
         {loading ? (

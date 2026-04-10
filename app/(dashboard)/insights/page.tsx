@@ -135,7 +135,7 @@ export default function InsightsPage() {
     <div className="p-4 md:p-8">
       <div className="mb-6">
         <SectionLabel>Intelligence Engine</SectionLabel>
-        <h1 className="font-syne font-bold text-text-primary text-3xl mt-1">Portfolio Insights</h1>
+        <h1 className="font-syne font-bold text-text-primary text-2xl sm:text-3xl mt-1">Portfolio Insights</h1>
         <p className="font-dm text-text-dim text-sm mt-1">AI-generated alerts requiring attention</p>
       </div>
 
@@ -163,7 +163,7 @@ export default function InsightsPage() {
           const contact = insight.contactId ? getContact(insight.contactId) : null
           const isExpanded = expandedAnalysis[insight.id]
           return (
-            <Card key={insight.id} className={`p-5 border-l-4 ${severityBorder(insight.severity)}`}>
+            <Card key={insight.id} className={`p-3 sm:p-5 border-l-4 ${severityBorder(insight.severity)}`}>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -217,7 +217,7 @@ export default function InsightsPage() {
       {taskModal && (
         <>
           <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setTaskModal(null)} />
-          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-app-surface border border-app-border rounded-lg p-6 z-50 w-[400px]">
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-app-surface border border-app-border rounded-lg p-4 sm:p-6 z-50 w-[calc(100%-2rem)] sm:w-[400px]">
             <h3 className="font-syne font-bold text-text-primary text-lg mb-4">Create Task</h3>
             <div className="mb-4"><label className="font-dm text-text-dim text-xs block mb-1">Task Title</label><input type="text" value={taskTitle} onChange={e => setTaskTitle(e.target.value)} className="w-full bg-app-card border border-app-border rounded-lg px-3 py-2 text-text-primary font-dm text-sm focus:border-accent-border focus:outline-none" /></div>
             <div className="mb-4"><label className="font-dm text-text-dim text-xs block mb-1">Source Insight</label><p className="font-dm text-text-mid text-sm">{taskModal.type}</p></div>

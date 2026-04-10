@@ -35,7 +35,7 @@ export function ProjectCard({ project, role }: ProjectCardProps) {
       {/* Status color bar */}
       <div className="h-0.5 w-full" style={{ background: statusColor(project.status) }} />
 
-      <div className="p-5">
+      <div className="p-3 sm:p-5">
         {/* Header row */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1 mr-3">
